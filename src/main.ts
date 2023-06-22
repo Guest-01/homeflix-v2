@@ -12,6 +12,7 @@ import { createApp } from 'vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import 'cross-fetch/polyfill';
 
 const app = createApp(App)
 
