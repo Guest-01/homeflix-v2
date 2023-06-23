@@ -5,7 +5,7 @@
     <template #append>
       <v-btn v-if="authStore.isLogin" class="d-none d-sm-flex" variant="flat" color="primary" rounded
         :to="{ name: 'Login' }">로그인</v-btn>
-      <v-btn v-else class="d-none d-sm-flex" variant="flat" color="primary" rounded @click="authStore.logout">로그아웃</v-btn>
+      <v-btn v-else class="d-none d-sm-flex" variant="flat" color="primary" rounded @click="handleLogout">로그아웃</v-btn>
       <!-- <v-divider vertical inset class="mx-2" /> -->
       <!-- <v-btn variant="flat" color="secondary" rounded>회원가입</v-btn> -->
       <v-app-bar-nav-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -35,6 +35,12 @@ export default defineComponent({
   data() {
     return {
       drawer: false,
+    }
+  },
+  methods: {
+    async handleLogout() {
+      await this.authStore.logout();
+      this.$router.push({ name: 'Login' });
     }
   }
 })
