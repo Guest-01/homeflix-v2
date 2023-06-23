@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar>
-    <v-app-bar-title>Homeflix v2</v-app-bar-title>
+  <v-app-bar density="comfortable">
+    <v-app-bar-title><a class="my-a" href="/">Homeflix v2</a></v-app-bar-title>
 
     <template #append>
       <v-btn v-if="authStore.isLogin" class="d-none d-sm-flex" variant="flat" color="primary" rounded
@@ -46,4 +46,10 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.my-a,
+.my-a:visited {
+  text-decoration: none;
+  color: initial;
+}
+</style>
