@@ -3,7 +3,7 @@
     <v-app-bar-title><a class="my-a" href="/">Homeflix v2</a></v-app-bar-title>
 
     <template #append>
-      <v-btn v-if="authStore.isLogin" class="d-none d-sm-flex" variant="flat" color="primary" rounded
+      <v-btn v-if="!isLogin" class="d-none d-sm-flex" variant="flat" color="primary" rounded
         :to="{ name: 'Login' }">로그인</v-btn>
       <v-btn v-else class="d-none d-sm-flex" variant="flat" color="primary" rounded @click="handleLogout">로그아웃</v-btn>
       <!-- <v-divider vertical inset class="mx-2" /> -->
@@ -24,13 +24,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useAuthStore } from '@/store/auth'
+import { defineComponent, onBeforeUnmount, ref } from 'vue'
+import { pb } from "@/lib/pb"
 
 export default defineComponent({
   setup() {
-    const authStore = useAuthStore();
-    return { authStore }
+    const isLogin = ref(false);
+
+    const unsub = pb.authStore.onChange((token, model) => {
+      isLogin.value = model ? true : false;
+    }, true);
+
+    onBeforeUnmount(() => {
+      unsub();
+    })
+
+    return { pb, isLogin }
   },
   data() {
     return {
@@ -39,7 +48,7 @@ export default defineComponent({
   },
   methods: {
     async handleLogout() {
-      await this.authStore.logout();
+      await this.pb.authStore.clear();
       this.$router.push({ name: 'Login' });
     }
   }

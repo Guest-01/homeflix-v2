@@ -40,14 +40,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useAuthStore } from '@/store/auth'
 import rules from '@/utils/validations';
 import { ClientResponseError } from "pocketbase"
+import { pb } from '@/lib/pb'
 
 export default defineComponent({
   setup() {
-    const authStore = useAuthStore();
-    return { authStore, rules }
+    return { rules, pb }
   },
   data() {
     return {
@@ -66,7 +65,7 @@ export default defineComponent({
       if (!this.isValid) return;
       this.loading = true;
       try {
-        await this.authStore.login(this.username, this.pw);
+        await pb.collection('users').authWithPassword(this.username, this.pw);
         this.$router.replace({ name: 'Home' });
       } catch (error) {
         if (error instanceof ClientResponseError) {
