@@ -66,7 +66,12 @@ export default defineComponent({
       this.loading = true;
       try {
         await pb.collection('users').authWithPassword(this.username, this.pw);
-        this.$router.replace({ name: 'Home' });
+        // 왔던 곳으로 되돌려 보내기
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect as string);
+        } else {
+          this.$router.replace({ name: 'Home' });
+        }
       } catch (error) {
         if (error instanceof ClientResponseError) {
           this.errMsg = error.message;

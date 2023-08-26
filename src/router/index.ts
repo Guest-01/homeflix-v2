@@ -41,7 +41,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   if (to.name === 'Login' && pb.authStore.isValid) return { name: 'Home' };
-  else if (to.name !== 'Login' && to.name !== 'Signup' && to.name !== 'Home' && !pb.authStore.isValid) return { name: 'Login' };
+  else if (to.name !== 'Login' && to.name !== 'Signup' && to.name !== 'Home' && !pb.authStore.isValid) return { name: 'Login', query: { redirect: to.fullPath } };
   else return true;
 })
 
