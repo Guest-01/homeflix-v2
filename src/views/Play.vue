@@ -16,7 +16,7 @@
             </span>
           </v-card-title>
           <v-card-subtitle>
-            조회수: {{ currentVid?.viewCount }}회 | 방영일자:
+            조회수: {{ currentVid?.view_count }}회 | 방영일자:
             {{ currentVid?.on_air }}
           </v-card-subtitle>
           <v-card-text v-if="!showDesc">
@@ -61,16 +61,17 @@ export default defineComponent({
         this.currentVid = this.videoStore.videos.filter(el => el.id === this.$route.params.videoId)[0];
       }
       
-      this.src = await this.getVidSrc();
+      // 파일 URL 가져오기
+      this.src = await this.videoStore.getVideoSrc(this.currentVid);
+      
+      // 조회수 1 증가시키기
+      await this.videoStore.incrementViewCount(this.currentVid);
     },
     toShortPlainText(html: string) {
       const tmp = document.createElement("DIV");
       tmp.innerHTML = html;
       const text = tmp.textContent || tmp.innerText || "";
       return text.substring(0, 50) + "...(더보기)";
-    },
-    async getVidSrc() {
-      return await this.videoStore.getVideoSrc(this.currentVid);
     }
   }
 })

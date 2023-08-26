@@ -25,6 +25,11 @@ export const useVideoStore = defineStore('video', {
     async getVideoSrc(currentVid: Record) {
       const token = await pb.files.getToken();
       return await pb.files.getUrl(currentVid, currentVid.video, { 'token': token });
+    },
+    async incrementViewCount(currentVid: Record) {
+      await pb.collection("videos").update(currentVid.id, {
+        view_count: currentVid.view_count + 1,
+      })
     }
   }
 })
