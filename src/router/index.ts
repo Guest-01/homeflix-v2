@@ -19,6 +19,16 @@ const routes = [
         name: 'Login',
         component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
       },
+      {
+        path: 'play/:titleId',
+        name: 'Title',
+        component: () => import(/* webpackChunkName: "play" */ '@/views/Play.vue'),
+      },
+      {
+        path: 'play/:titleId/:videoId',
+        name: 'Episode',
+        component: () => import(/* webpackChunkName: "play" */ '@/views/Play.vue'),
+      },
     ],
   },
 ]
