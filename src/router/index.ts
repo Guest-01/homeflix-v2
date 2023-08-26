@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import { pb } from '@/lib/pb'
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async (to, from) => {
+  if (to.name === 'Login' && pb.authStore.isValid) return { name: 'Home' };
+  else if (to.name !== 'Login' && to.name !== 'Signup' && to.name !== 'Home' && !pb.authStore.isValid) return { name: 'Login' };
+  else return true;
 })
 
 export default router
