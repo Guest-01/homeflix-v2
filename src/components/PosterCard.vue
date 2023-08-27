@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-4" width="200" :to="{ name: 'Title', params: { titleId: item.id } }">
+  <v-card class="mx-2" width="200" :to="{ name: 'Title', params: { titleId: item.id } }">
     <v-img height="280" cover :src="posterURL" />
     <div class="pa-3">
       <div class="text-body-2 text-grey">{{ item.genre }}</div>
