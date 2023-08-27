@@ -17,7 +17,7 @@
           </v-card-title>
           <v-card-subtitle>
             조회수: {{ currentVid?.view_count }}회 | 방영일자:
-            {{ currentVid?.on_air }}
+            {{ new Date(currentVid?.on_air).toLocaleDateString() }}
           </v-card-subtitle>
           <v-card-text v-if="!showDesc">
             {{ toShortPlainText(currentVid?.expand.title.description) }}
@@ -36,7 +36,7 @@
             <v-chip-group>
               <v-chip v-for="v in videoStore.videos" :key="v.id"
                 :to="{ name: 'Episode', params: { titleId: currentVid?.expand.title.id, videoId: v.id } }">
-                {{ v.episode }}화 {{ v.on_air }}
+                {{ v.episode }}화 {{ new Date(v.on_air).toLocaleDateString() }}
               </v-chip>
             </v-chip-group>
           </v-card-text>

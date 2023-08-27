@@ -13,13 +13,16 @@
     <tbody>
       <tr v-for="item in items">
         <td class="notice-title" @click="openNoticeDetail(item.id)">{{ item.title }}</td>
-        <td class="text-right">{{ item.updated }}</td>
+        <td class="text-right">{{ new Date(item.updated).toLocaleString() }}</td>
       </tr>
     </tbody>
   </v-table>
   
   <v-dialog v-model="isOpen" max-width="600px">
-    <v-card :title="noticeStore.currentNotice.title" :subtitle="noticeStore.currentNotice.updated">
+    <v-card :title="noticeStore.currentNotice.title">
+      <template #subtitle>
+        {{ new Date(noticeStore.currentNotice.updated).toLocaleString() }}
+      </template>
       <template #text>
         <div v-html="noticeStore.currentNotice.content"></div>
       </template>
