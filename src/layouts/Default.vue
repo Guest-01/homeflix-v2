@@ -3,9 +3,10 @@
     <v-app-bar-title><a class="my-a" href="/">Homeflix v2</a></v-app-bar-title>
 
     <template #append>
-      <v-btn v-if="!isLogin" class="d-none d-sm-flex" variant="flat" color="primary" rounded
+      <v-btn v-if="!isLogin" class="d-none d-sm-flex" prepend-icon="mdi-login" variant="flat" color="primary" rounded
         :to="{ name: 'Login' }">로그인</v-btn>
-      <v-btn v-else class="d-none d-sm-flex" variant="flat" color="primary" rounded @click="handleLogout">로그아웃</v-btn>
+      <v-btn v-else class="d-none d-sm-flex" prepend-icon="mdi-logout" variant="flat" color="primary" rounded
+        @click="handleLogout">로그아웃</v-btn>
       <!-- <v-divider vertical inset class="mx-2" /> -->
       <!-- <v-btn variant="flat" color="secondary" rounded>회원가입</v-btn> -->
       <v-app-bar-nav-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -13,8 +14,9 @@
   </v-app-bar>
 
   <v-navigation-drawer v-model="drawer" location="right" disable-resize-watcher>
-    <v-list>
-      <v-list-item title="Drawer left"></v-list-item>
+    <v-list nav density="compact">
+      <v-list-item v-if="!isLogin" :to="{ name: 'Login' }" prepend-icon="mdi-login" title="로그인" />
+      <v-list-item v-else @click="handleLogout" prepend-icon="mdi-logout" title="로그아웃" />
     </v-list>
   </v-navigation-drawer>
 
