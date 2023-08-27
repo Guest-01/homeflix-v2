@@ -22,9 +22,9 @@ Homeflix v2는 Vue3를 중심으로 아래 스택으로 구성할 예정입니�
 
 ## 개발 내역
 
-1. [Auth](https://www.notion.so/Homeflix-v2-ede904c4c16c45a1acc678a8f72480c2?pvs=21)
-2. [Notice](https://www.notion.so/Homeflix-v2-ede904c4c16c45a1acc678a8f72480c2?pvs=21)
-3. [Titles & Videos](https://www.notion.so/Homeflix-v2-ede904c4c16c45a1acc678a8f72480c2?pvs=21)
+1. [Auth](#1-auth)
+2. [Notice](#2-notice)
+3. [Titles & Videos](#3-titles--videos)
 
 ### 1. Auth
 
