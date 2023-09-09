@@ -1,6 +1,13 @@
 <template>
   <v-container fluid>
     <v-row justify="center">
+      <v-col cols="8">
+        <v-alert closable border="start" type="warning" density="compact" variant="tonal">
+          본 사이트는 개발 학습 의도로 제작되었으며 실제 저작권 영상을 담고 있지 않습니다.
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
       <v-col cols="auto" md="8">
         <div class="d-flex align-center mb-1">
           <v-icon start size="small" icon="mdi-history" />
