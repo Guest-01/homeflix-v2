@@ -51,8 +51,8 @@ export default defineComponent({
   data() {
     return {
       isValid: null,
-      username: "",
-      pw: "",
+      username: "user1",
+      pw: "test1234",
 
       showPw: false,
       loading: false,
