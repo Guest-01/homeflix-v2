@@ -1,13 +1,13 @@
 <template>
   <v-container fluid>
-    <v-row dense>
-      <v-col cols="12">
+    <v-row dense justify="center">
+      <v-col cols="12" md="8">
         <video class="vid" :src="src" controls controlslist="nodownload" />
       </v-col>
     </v-row>
 
-    <v-row dense>
-      <v-col cols="12">
+    <v-row dense justify="center">
+      <v-col cols="12" md="8">
         <v-card @click="showDesc = !showDesc" :ripple="false">
           <v-card-title>
             {{ currentVid?.expand.title.title }}
@@ -28,8 +28,8 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
-      <v-col cols="12">
+    <v-row dense justify="center">
+      <v-col cols="12" md="8">
         <v-card>
           <v-card-subtitle class="mt-4">전체 회차</v-card-subtitle>
           <v-card-text class="pt-0">
