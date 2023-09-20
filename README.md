@@ -1,8 +1,13 @@
 # Homeflix v2
 
-> Self-hosted Netflix
+> Self-hosted Netflix   
+> https://homeflix-v2.hop.sh/
 
 이 문서는 Vue2를 이용해 만들었던 homeflix-v1을 Vue3를 이용해 다시 개발하면서 생긴 일들을 기록하기 위해 존재합니다.
+
+| 홈페이지 스크린샷 |
+|-|
+|![image](https://github.com/Guest-01/homeflix-v2/assets/49602144/3d9bdc82-133b-4b0b-a09f-cf27a2a6fc92)|
 
 ## 개발 환경
 
