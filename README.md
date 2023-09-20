@@ -137,3 +137,56 @@ Homeflix v2는 Vue3를 중심으로 아래 스택으로 구성할 예정입니�
     ```
 
 (TODO: Search, Comments, SignUp...)
+
+## 배포
+
+> PocketBase는 Self-Hosting 목적으로 만들어진 만큼, 서버에 직접 올려보는 것이 좋다. 원래는 라즈베리파이에 온프레미스로 하려고 했으나, 도메인 연결 등 부가적인 관리 공수가 들기 때문에 클라우드로 변경함.
+
+리눅스 서버를 제공하는 어떤 호스팅 서비스를 사용해도 무방하나, pocketbase 공식 FAQ에서 추천하는 호스팅 서비스 중 한곳을 이용하기로 함. ([FAQ링크](https://pocketbase.io/faq/))
+
+- [https://github.com/pocketbase/pocketbase/discussions/2856](https://github.com/pocketbase/pocketbase/discussions/2856)
+
+### hop.io
+
+hop은 컨테이너 기반의 호스팅 업체이다. 아마존의 EC2와는 달리 직접 서버에 접근할 수는 없고, github나 docker resigstry, 혹은 hop CLI를 통해 프로젝트를 바로 deploy할 수 있다. [이때 프로젝트 루트에서 알아서 개발언어와 환경을 감지해서 내부적으로 Nixpacks라는 도구를 이용해서 컨테이너를 만든다고 한다.](https://docs.hop.io/ignite/deploying) 그런데 만약 프로젝트 루트에 개발자가 직접 만든 Dockerfile이 있다면 그것을 대신 사용한다고 한다. Pocketbase를 이용할 때는 이렇게 직접 Dockerfile을 이용해서 배포할 것이다. (감지 가능한 개발 언어, 환경이 아니므로)
+
+### 도커 이미지에 담기
+
+Pocketbase의 백엔드 및 DB부분은 자체 백업 및 복원으로 적용할 예정이며, 테스트 결과 `pb_public` 폴더는 복원되지 않으므로 프론트엔드 부분은 직접 도커파일에서 `COPY`를 통해 옮겨야 한다.
+
+### 시행착오
+
+처음에는 그냥 로컬에서 빌드 후 도커파일 내에서 `COPY ./dist /pb/pb_public` 이렇게 복사하였다. 내 PC에서는 이대로 도커 빌드 및 실행도 모두 잘 되었으나, `hop deploy`를 하면 dist 폴더를 찾을 수 없다는 에러가 발생했다. 그래서 프론트엔드도 도커파일 내에서 빌드를 하는 것으로 전환했다. (아래 최종 도커파일 참고)
+    
+
+위 시행착오로 인해 프론트엔드 빌드 과정을 도커파일에 넣었고, 최종 Dockerfile은 아래와 같다.
+
+```docker
+# build stage
+FROM node:lts-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+ENV NODE_ENV production
+RUN npm run build
+
+# production stage
+FROM alpine:latest as production-stage
+ARG PB_VERSION=0.18.6
+RUN apk add --no-cache \
+    unzip \
+    ca-certificates
+
+ADD https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip /tmp/pb.zip
+RUN unzip /tmp/pb.zip -d /pb/
+
+# 프론트엔드 빌드 결과물 복사하기
+COPY --from=build-stage /app/dist /pb/pb_public
+
+EXPOSE 8080
+
+CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8080"]
+```
+
+💡 최종 배포 URL: [https://homeflix-v2.hop.sh/](https://homeflix-v2.hop.sh/)
