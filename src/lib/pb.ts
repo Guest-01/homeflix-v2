@@ -1,5 +1,8 @@
 import PocketBase from 'pocketbase';
 
-const ip = process.env.NODE_ENV === "production" ? "http://localhost:8080" : "http://127.0.0.1:8090";
+const ip = process.env.NODE_ENV === "production" ? "https://homeflix-v2.hop.sh/" : "http://127.0.0.1:8090";
+
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("IP:", ip);
 
 export const pb = new PocketBase(ip);
