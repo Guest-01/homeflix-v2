@@ -7,7 +7,7 @@
 
 | 홈페이지 스크린샷 |
 |-|
-|![image](https://github.com/Guest-01/homeflix-v2/assets/49602144/3d9bdc82-133b-4b0b-a09f-cf27a2a6fc92)|
+|![image](https://github.com/Guest-01/homeflix-v2/assets/49602144/5908b817-1570-46fb-9a35-30a918073dd1)|
 
 ## 개발 환경
 
