@@ -6,6 +6,10 @@
       </v-col>
     </v-row>
 
+    <v-row v-if="currentVid?.embed_source" dense justify="center">
+      <v-col cols="auto" v-html="currentVid?.embed_source"></v-col>
+    </v-row>
+
     <v-row dense justify="center">
       <v-col cols="12" md="8">
         <v-card @click="showDesc = !showDesc" :ripple="false">

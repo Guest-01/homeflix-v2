@@ -51,8 +51,8 @@ export default defineComponent({
   data() {
     return {
       isValid: null,
-      username: "user1",
-      pw: "test1234",
+      username: "user1@test.com",
+      pw: "user123!",
 
       showPw: false,
       loading: false,
