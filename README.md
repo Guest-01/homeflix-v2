@@ -1,7 +1,7 @@
 # Homeflix v2
 
 > Self-hosted Netflix   
-> https://homeflix-v2.hop.sh/
+> https://homeflix-v2.pockethost.io/
 
 이 문서는 Vue2를 이용해 만들었던 homeflix-v1을 Vue3를 이용해 다시 개발하면서 생긴 일들을 기록하기 위해 존재합니다.
 
@@ -151,7 +151,9 @@ Homeflix v2는 Vue3를 중심으로 아래 스택으로 구성할 예정입니�
 
 - [https://github.com/pocketbase/pocketbase/discussions/2856](https://github.com/pocketbase/pocketbase/discussions/2856)
 
-### hop.io
+### ~~hop.io~~ → 서비스 종료됨
+
+> 아래 내용은 기록으로 남겨두지만, 더 이상 hop.io가 정상적으로 서비스되지 않아서 옮기기로 함.
 
 hop은 컨테이너 기반의 호스팅 업체이다. 아마존의 EC2와는 달리 직접 서버에 접근할 수는 없고, github나 docker resigstry, 혹은 hop CLI를 통해 프로젝트를 바로 deploy할 수 있다. [이때 프로젝트 루트에서 알아서 개발언어와 환경을 감지해서 내부적으로 Nixpacks라는 도구를 이용해서 컨테이너를 만든다고 한다.](https://docs.hop.io/ignite/deploying) 그런데 만약 프로젝트 루트에 개발자가 직접 만든 Dockerfile이 있다면 그것을 대신 사용한다고 한다. Pocketbase를 이용할 때는 이렇게 직접 Dockerfile을 이용해서 배포할 것이다. (감지 가능한 개발 언어, 환경이 아니므로)
 
@@ -194,4 +196,17 @@ EXPOSE 8080
 CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8080"]
 ```
 
-💡 최종 배포 URL: [https://homeflix-v2.hop.sh/](https://homeflix-v2.hop.sh/)
+💡 ~~최종 배포 URL: [https://homeflix-v2.hop.sh/](https://homeflix-v2.hop.sh/)~~ 서비스 종료
+
+### pockethost.io
+
+Pockethost는 2021년, [Ben Allfree](https://github.com/benallfree)라는 사람이 만든 심플한 PocketBase 배포 서비스이다. PocketBase를 타겟으로 호스팅하기 때문에 위의 hop.io나 다른 호스팅 서비스처럼 PocketBase를 호스팅하기 위한 설정이 필요 없고 (ZeroConfig) 바로 알아서 셋업이 된다는 점이 편리했다.
+
+사용법은 그냥 가입하자마자 PocketBase 인스턴스가 만들어지고 동일 계정으로 Admin이 만들어지기에 대시보드로 바로 진입하면 된다. `pb_public` 및 기타 폴더에 직접 접근이 필요한 경우는 FTP를 제공한다.
+
+구체적인 배포 전략은 다음과 같다.
+
+- pocketbase 관련 백엔드 DB는 자체 백업/복원 시스템으로 배포하고,
+- 프론트엔드의 경우는 FTP를 이용하여 `pb_public` 폴더에 직접 업로드한다.
+
+💡 최종 배포 URL: [https://homeflix-v2.pockethost.io/](https://homeflix-v2.pockethost.io/)
